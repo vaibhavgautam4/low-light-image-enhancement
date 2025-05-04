@@ -8,7 +8,8 @@ def main():
     st.title("Low-Light Image Enhancer")
 
     inferer = Inferer()
-    weights_path = "weights/low_light_weights_best.h5"
+    # weights_path = "weights/low_light_weights_best.h5"
+    weights_path = "https://drive.google.com/file/d/1k_fve0bGykhUA8mkwObsGmCead76L6Fw/view?usp=sharing"
 
     if not os.path.exists(weights_path):
         st.error("Model weights not found. Please ensure 'low_light_weights_best.h5' is in the expected directory.")
