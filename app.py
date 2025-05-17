@@ -70,7 +70,7 @@ def download_model():
     response = requests.get(url, stream=True)
     if response.status_code == 200:
         with open(MODEL_PATH, "wb") as f:
-            for chunk in response.iter_content(1024 * 1024):
+            for chunk in response.iter_content(4 * 1024 * 1024):
                 f.write(chunk)
     else:
         st.error("Failed to download model weights.")
