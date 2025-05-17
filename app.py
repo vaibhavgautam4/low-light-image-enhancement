@@ -12,7 +12,7 @@ def download_model(weights_path):
         st.warning("Model weights not found locally. Downloading from Google Drive...")
         file_id = "1zygtod4QnQW-8WrMxZMOGUfGjwnEBydO"
         # https://drive.google.com/file/d/1zygtod4QnQW-8WrMxZMOGUfGjwnEBydO/view?usp=drive_link
-        gdown.download(f"https://drive.google.com/uc?id={file_id}", weights_path, quiet=False)
+        gdown.download(f"https://drive.google.com/uc?id={file_id}/view", weights_path, quiet=False)
 
 def main():
     st.title("Low-Light Image Enhancer")
