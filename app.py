@@ -69,8 +69,9 @@ def download_model():
     os.makedirs("weights", exist_ok=True)
     response = requests.get(url, stream=True)
     if response.status_code == 200:
+        print("response status block....")
         with open(MODEL_PATH, "wb") as f:
-            for chunk in response.iter_content(4 * 1024 * 1024):
+            for chunk in response.iter_content(1024 * 1024):
                 f.write(chunk)
     else:
         st.error("Failed to download model weights.")
