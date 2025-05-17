@@ -1,20 +1,30 @@
-# app.py
+# # app.py
+
 import streamlit as st
 from PIL import Image
 from enhance import Inferer
 import os
+import gdown
+
+def download_model(weights_path):
+    """Download the model from Google Drive if not exists."""
+    if not os.path.exists(weights_path):
+        st.warning("Model weights not found locally. Downloading from Google Drive...")
+        file_id = "1zygtod4QnQW-8WrMxZMOGUfGjwnEBydO"
+        # https://drive.google.com/file/d/1zygtod4QnQW-8WrMxZMOGUfGjwnEBydO/view?usp=drive_link
+        gdown.download(f"https://drive.google.com/uc?id={file_id}", weights_path, quiet=False)
 
 def main():
     st.title("Low-Light Image Enhancer")
 
-    inferer = Inferer()
-    # weights_path = "weights/low_light_weights_best.h5"
-    weights_path = "https://drive.google.com/file/d/1k_fve0bGykhUA8mkwObsGmCead76L6Fw/view?usp=sharing"
+    weights_path = "weights/low_light_weights_best.h5"
+    download_model(weights_path)
 
     if not os.path.exists(weights_path):
-        st.error("Model weights not found. Please ensure 'low_light_weights_best.h5' is in the expected directory.")
+        st.error("Failed to load model weights.")
         return
 
+    inferer = Inferer()
     inferer.build_model(num_rrg=3, num_mrb=2, channels=64, weights_path=weights_path)
 
     uploaded_file = st.file_uploader("Upload a low-light image", type=["jpg", "jpeg", "png"])
@@ -39,12 +49,14 @@ def enhanced_to_bytes(image):
     from io import BytesIO
     buf = BytesIO()
     image.save(buf, format="PNG")
-    byte_im = buf.getvalue()
-    return byte_im
+    return buf.getvalue()
 
 if __name__ == "__main__":
     main()
 
+
 # if __name__ == "__main__":
 #     import streamlit.bootstrap
 #     streamlit.bootstrap.run("app.py", "", [], {})
+
+
